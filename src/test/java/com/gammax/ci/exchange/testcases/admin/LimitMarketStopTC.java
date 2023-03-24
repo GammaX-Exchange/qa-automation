@@ -20,8 +20,6 @@ public class LimitMarketStopTC extends Base{
     MetamaskRegistrationPage registrationPage= new MetamaskRegistrationPage();
     ConfirmYourOrderPage confirmPage = new ConfirmYourOrderPage();
 
-    Base playbookbase=new Base();
-
     @BeforeMethod
     public void login() throws Exception {
         loginPage.LoginPageDriverRef(driver);
