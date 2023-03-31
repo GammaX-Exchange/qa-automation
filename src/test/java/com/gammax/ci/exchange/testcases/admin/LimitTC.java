@@ -20,8 +20,6 @@ public class LimitTC extends Base{
 
     MetamaskRegistrationPage registrationPage= new MetamaskRegistrationPage();
     ConfirmYourOrderPage confirmPage = new ConfirmYourOrderPage();
-
-    Base playbookbase=new Base();
     
     @BeforeMethod
     public void login() throws Exception {
@@ -76,6 +74,8 @@ public class LimitTC extends Base{
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickBuy();
+        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        homePage.validatBuyOrderBook("",data.getQuantity());
     }
     
     @Test(dataProvider = "getData")
@@ -87,7 +87,9 @@ public class LimitTC extends Base{
         homePage.enterQty(data.getQuantity());
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
-        confirmPage.clickBuy();      
+        confirmPage.clickBuy();
+        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        homePage.validatBuyOrderBook("",data.getQuantity());
     }
     
     @Test(dataProvider = "getData")
@@ -101,6 +103,8 @@ public class LimitTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
+        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        homePage.validatSellOrderBook("",data.getQuantity());
     }
     
     @Test(dataProvider = "getData")
@@ -113,6 +117,8 @@ public class LimitTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
+        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        homePage.validatSellOrderBook("",data.getQuantity());
     }
 
 }

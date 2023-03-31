@@ -9,6 +9,7 @@ import com.gammax.ci.gammax.testbase.JSWaiter;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +38,7 @@ public class Homepage extends Base {
 	@FindBy(xpath ="//*[@id='dropdown-name']")
 	WebElement loggedinUser;
 
-	//	@FindBy(xpath = "//div[text()='Connect Wallet']")
+//	@FindBy(xpath = "//div[text()='Connect Wallet']")
 	@FindBy(xpath = "(//div[text()=' Connect Wallet '])[1]")
 	WebElement connectWallet;
 
@@ -61,10 +62,10 @@ public class Homepage extends Base {
 
 	@FindBy(xpath = "//div[contains(text(),'Quantity')]/following-sibling::div/input")
 	WebElement quantity;
-
+	
 	@FindBy(xpath = "//div[contains(text(),'Stop Price')]/following-sibling::div/input")
 	WebElement stopPrice;
-
+	
 	@FindBy(xpath = "//div[contains(text(),'Trigger Price')]/following-sibling::div/input")
 	WebElement triggerPrice;
 
@@ -82,81 +83,93 @@ public class Homepage extends Base {
 
 	@FindBy(linkText = "Market")
 	WebElement market;
-
+	
 	@FindBy(xpath = "//div[contains(text(),'Deposit')]")
 	WebElement deposit;
-
+	
 	@FindBy(xpath = "//div[contains(text(),'Withdrawal')]")
 	WebElement withdrawal;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'amount-container')]//input")
 	WebElement amount;
-
+	
 	@FindBy(xpath = "//div[contains(text(),'Confirm Deposit')]")
 	WebElement confirmDeposit;
-
+	
 	@FindBy(xpath = "//div[contains(text(),' Confirm Withdrawal ')]")
 	WebElement confirmWithdrawal;
-
+	
 	@FindBy(css = "[class='amount-value']")
 	List<WebElement> balance;
-
+	
 	@FindBy(xpath = "//div[text()='Place Order']/following-sibling::div/a")
 	WebElement calculator;
-
+	
 	@FindBy(xpath = "//div[@class='options-name' and text()=' Mark Price ']/following-sibling::div")
 	WebElement markPrice;
-
+	
 	@FindBy(xpath = "//*[text()='Stop Limit']")
 	WebElement stopLimit;
-
+	
 	@FindBy(xpath = "//div[text()='Trigger']")
 	WebElement trigger;
-
+	
 	@FindBy(css = "[class='dropdown-content dropdown-content-show'] > div > div > div")
 	List<WebElement> triggerOptions;
-
+	
 	@FindBy(xpath = "//span[@class='market-name']")
 	WebElement crypto;
-
+	
 	@FindBy(css="[class='wallet-name']")
 	List<WebElement> walletnames;
-
+	
 	@FindBy(partialLinkText = "Order History")
 	WebElement orderHistory;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[1]")
 	List<WebElement> tsymbol;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[2]/span")
 	List<WebElement> tqty;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[3]")
 	List<WebElement> torderPrice;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[5]")
 	List<WebElement> tStopPrice;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[7]")
 	List<WebElement> tType;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[8]/span")
 	List<WebElement> stoptType;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[8]/span[1]")
 	List<WebElement> tOrderID;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[9]")
 	List<WebElement> tStatus;
-
+	
 	@FindBy(xpath = "//div[contains(@class,'body-row')]/div[10]")
 	List<WebElement> tTime;
-
+	
 	@FindBy(xpath = "//*[@selectedoption='trade.placeorder.Tab4']//div[contains(@class,'option-name')]")
 	List<WebElement> tabs;
-
+	
 	@FindBy(partialLinkText = "Stops")
 	WebElement stops;
+
+	@FindBy(xpath ="//div[@class='bids']//div[@class='tbl-striped trade-rows ng-star-inserted']/div/div[1]")
+	List<WebElement> buyPrice;
+
+	@FindBy(xpath ="//div[@class='bids']//div[@class='tbl-striped trade-rows ng-star-inserted']/div/div[2]")
+	List<WebElement> buySize;
+
+	@FindBy(xpath ="//*[@id='messageBody']/div/div/div[1]")
+	List<WebElement> sellPrice;
+
+	@FindBy(xpath ="//div[@class='asks']//div[@class='tbl-striped trade-rows ng-star-inserted']/div/div[2]")
+	List<WebElement> sellSize;
 
 	public void HomePageDriverRef(WebDriver driver) {
 		this.driver = driver;
@@ -165,12 +178,12 @@ public class Homepage extends Base {
 		element = new Element(driver);
 		JSWaiter.setDriver(driver);
 	}
-
+	
 	public void clickWithDrawal() {
 		driver.navigate().refresh();
 		withdrawal.click();
 		extentTest.log(LogStatus.INFO, "Click on With Drawal");
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 
@@ -178,38 +191,38 @@ public class Homepage extends Base {
 		driver.navigate().refresh();
 		element.click(driver, deposit);
 		extentTest.log(LogStatus.INFO, "Click on Deposit");
-		takeScreenShot();
+        takeScreenShot();
 	}
-
+	
 	public void enterAmount(String amt) {
 		amount.clear();
 		amount.sendKeys(amt);
 		extentTest.log(LogStatus.INFO, "Enter Amount :: "+amt);
-		takeScreenShot();
+        takeScreenShot();
 	}
-
+	
 	public void clickconfirmDeposit() {
 		element.click(driver, confirmDeposit);
 		extentTest.log(LogStatus.INFO, "Click on Confirm Deposit");
-		takeScreenShot();
+        takeScreenShot();
 	}
-
+	
 	public void clickconfirmWithdrawal() {
 		confirmWithdrawal.click();
 		extentTest.log(LogStatus.INFO, "Click on Confirm With Drawal");
-		takeScreenShot();
+        takeScreenShot();
 	}
-
+	
 	public String getBalance() {
 		extentTest.log(LogStatus.INFO, "Balance :: "+balance.get(0).getText());
 		return balance.get(0).getText();
 	}
-
+	
 	public String getBalanceonWindow() {
 		extentTest.log(LogStatus.INFO, "Balance :: "+balance.get(1).getText());
 		return balance.get(1).getText();
 	}
-
+	
 	public void isconfirmDepositDisabled() {
 		if(confirmDeposit.isEnabled())
 			extentTest.log(LogStatus.INFO, "Confirm Deposit Should be Disabled :: "+confirmDeposit.isEnabled());
@@ -221,19 +234,19 @@ public class Homepage extends Base {
 	public void clickConnectWallet() {
 		connectWallet.click();
 		extentTest.log(LogStatus.INFO, "Click on Connect Wallet");
-		takeScreenShot();
+        takeScreenShot();
 	}
-
+	
 	public void clickGetStarted() {
 		getstarted.click();
 		extentTest.log(LogStatus.INFO, "Click on Get Started");
-		takeScreenShot();
+        takeScreenShot();
 	}
-
+	
 	public void clickMetaMask() {
 		metaMask.click();
 		extentTest.log(LogStatus.INFO, "Click on MetaMask");
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void switchToMetaMaskNotification() {
@@ -247,7 +260,7 @@ public class Homepage extends Base {
 			driver.switchTo().window(window);
 			if (driver.getTitle().contains("MetaMask Notification")) {
 				extentTest.log(LogStatus.INFO, "Switch to Metamask Notofication");
-				takeScreenShot();
+		        takeScreenShot();
 				break;
 			}
 		}
@@ -263,32 +276,32 @@ public class Homepage extends Base {
 		Base.takeScreenShot();
 		base.timeinterval(2);
 	}
-
+	
 	public String getDialogMessage(){
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOf(alertdialog));
-		return alertdialog.getText();
+		return alertdialog.getText();	
 	}
 
 	public void enterLimitPrice(String price){
 		limitPrice.clear();
 		limitPrice.sendKeys(price);
 		extentTest.log(LogStatus.INFO, "Enter LIMIT PRICE :: "+price);
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void enterQty(String qty){
 		quantity.clear();
 		quantity.sendKeys(qty);
 		extentTest.log(LogStatus.INFO, "Enter QTY :: "+qty);
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void selectTIF(String option){
 		tif.click();
 		selectTifDropdown(option);
 		extentTest.log(LogStatus.INFO, "Select TIF :: "+option);
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void selectTifDropdown(String option){
@@ -304,20 +317,20 @@ public class Homepage extends Base {
 		element.waitClickable(driver, buy, 10);
 		element.clickByJs(driver, buy);
 		extentTest.log(LogStatus.INFO, "Click on BUY");
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void clickSell(){
 		element.waitClickable(driver, sell, 15);
 		element.clickByJs(driver, sell);
 		extentTest.log(LogStatus.INFO, "Click on SELL");
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void clickMarket(){
 		market.click();
 		extentTest.log(LogStatus.INFO, "Clicked on Market");
-		takeScreenShot();
+        takeScreenShot();
 	}
 
 	public void VerifyAleart(String message) throws Exception {
@@ -331,41 +344,41 @@ public class Homepage extends Base {
 			takeScreenShot();
 		}
 		while(true) {
-			if(driver.findElements(By.xpath("//div[@role='alertdialog']")).size() == 0) {
-				break;
-			}else {
+			if(driver.getPageSource().contains(message)) {
 				Thread.sleep(1000);
+			}else {
+				break;
 			}
 		}
 	}
-
+	
 	public String getMarkPrice() {
 		return markPrice.getText().trim();
 	}
-
+	
 	public void selectStopLimitTab(String tab) {
 		element.click(driver, stopLimit);
 		element.click(driver, tabs.stream().filter(e -> e.getText().equalsIgnoreCase(tab)).findFirst().get());
 		extentTest.log(LogStatus.PASS, "Click on "+tab);
 		takeScreenShot();
 	}
-
+	
 	public void enterstopPrice(String amount) {
 		element.sendKeys(stopPrice, amount);
 		extentTest.log(LogStatus.PASS, "STOP Price :: "+amount);
 		takeScreenShot();
 	}
-
+	
 	public void selectTrigger(String strtrigger) {
 		element.click(driver, trigger);
 		extentTest.log(LogStatus.PASS, "Click On Trigger Dropdown");
 		takeScreenShot();
 		triggerOptions.stream().filter(e-> e.getText().equalsIgnoreCase(strtrigger))
-				.findFirst().get().click();
+		.findFirst().get().click();
 		extentTest.log(LogStatus.PASS, "Select Trigger Dropdown :: "+strtrigger);
 		takeScreenShot();
 	}
-
+	
 	public void waitForSpinner() throws Exception {
 		while(true) {
 			if(driver.findElements(By.xpath("//*[@class='spinner ng-star-inserted']")).size() == 0) {
@@ -375,63 +388,63 @@ public class Homepage extends Base {
 			}
 		}
 	}
-
+	
 	public void selectCrypto(String cryptoEx) throws Exception {
 		element.click(driver, crypto);
 		extentTest.log(LogStatus.PASS, "Click On Crypto Dropdown");
 		takeScreenShot();
 		walletnames.stream().filter(e -> e.getText().trim().equalsIgnoreCase(cryptoEx))
-				.findFirst().get().click();
+		.findFirst().get().click();
 		extentTest.log(LogStatus.PASS, "Select "+cryptoEx+" On Crypto Dropdown");
 		takeScreenShot();
 		Thread.sleep(2000);
 	}
-
+	
 	public String getLimitPrice() {
 		return limitPrice.getText();
 	}
-
+	
 	public void clickOrderHistory() {
 		element.click(driver, orderHistory);
 		extentTest.log(LogStatus.PASS, "Click On Order History");
 		takeScreenShot();
 	}
-
+	
 	public void verifyOrderBook(String crypto, String qty, String stopprice, String type, String Status) {
 		if(tsymbol.get(0).getText().trim().equalsIgnoreCase(crypto)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+crypto+" ACTUAL :: "+tsymbol.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+crypto+" ACTUAL :: "+tsymbol.get(0).getText().trim());
 		}
-
+		
 		if(tqty.get(0).getText().trim().contains(qty)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+qty+" ACTUAL :: "+tqty.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+qty+" ACTUAL :: "+tqty.get(0).getText().trim());
 		}
-
+		
 		if(tStopPrice.get(0).getText().trim().contains(stopprice)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+stopprice+" ACTUAL :: "+tStopPrice.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+stopprice+" ACTUAL :: "+tStopPrice.get(0).getText().trim());
 		}
-
+		
 		if(tType.get(0).getText().trim().equalsIgnoreCase(type)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+type+" ACTUAL :: "+tType.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+type+" ACTUAL :: "+tType.get(0).getText().trim());
 		}
-
+		
 		if(tStatus.get(0).getText().trim().equalsIgnoreCase(Status)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+Status+" ACTUAL :: "+tStatus.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+Status+" ACTUAL :: "+tStatus.get(0).getText().trim());
 		}
-
+		
 		extentTest.log(LogStatus.PASS, "ORDER ID :: "+tOrderID.get(0).getText().trim());
-
+				
 	}
-
+	
 	public void clickStops() {
 		element.click(driver, stops);
 		extentTest.log(LogStatus.PASS, "Click on STOPS");
@@ -444,38 +457,83 @@ public class Homepage extends Base {
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+crypto+" ACTUAL :: "+tsymbol.get(0).getText().trim());
 		}
-
+		
 		if(tqty.get(0).getText().trim().contains(qty)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+qty+" ACTUAL :: "+tqty.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+qty+" ACTUAL :: "+tqty.get(0).getText().trim());
 		}
-
+		
 		if(tStopPrice.get(0).getText().trim().contains(stopprice)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+stopprice+" ACTUAL :: "+tStopPrice.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+stopprice+" ACTUAL :: "+tStopPrice.get(0).getText().trim());
 		}
-
+		
 		if(stoptType.get(0).getText().trim().equalsIgnoreCase(type)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+type+" ACTUAL :: "+stoptType.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+type+" ACTUAL :: "+stoptType.get(0).getText().trim());
 		}
-
+		
 		if(tStatus.get(0).getText().trim().equalsIgnoreCase(Status)) {
 			extentTest.log(LogStatus.PASS, "EXPECTED :: "+Status+" ACTUAL :: "+tStatus.get(0).getText().trim());
 		}else {
 			extentTest.log(LogStatus.FAIL, "EXPECTED :: "+Status+" ACTUAL :: "+tStatus.get(0).getText().trim());
 		}
-
+		
 	}
 
 	public void enterTriggerPrice(String string) {
 		element.sendKeys(triggerPrice, string);
 		extentTest.log(LogStatus.PASS, "Enter Trigger Price :: "+string);
 		takeScreenShot();
+		
+	}
 
+	public void validatBuyOrderBook(String price, String qty){
+		boolean bool = false;
+		for(int i = 0; i<buyPrice.size(); i++) {
+			if(price.contains(buyPrice.get(i).getText().trim()) && buySize.get(i).getText().trim().equals(qty)) {
+				bool = true;
+				break;
+			}
+		}
+		if(bool){
+			extentTest.log(LogStatus.PASS, "Record Exists with Price :: "+price+" Qyantity ::"+qty);
+		}else{
+			extentTest.log(LogStatus.FAIL, "Record DOESNT Exists with Price :: "+price+" Qyantity ::"+qty);
+		}
+	}
+
+	public void validatSellOrderBook(String price, String qty){
+		boolean bool = false;
+		for(int i = 0; i<sellPrice.size(); i++) {
+			if(sellPrice.get(i).getText().trim().equals(price) && sellSize.get(i).getText().trim().equals(qty)) {
+				bool = true;
+				break;
+			}
+		}
+		if(bool){
+			extentTest.log(LogStatus.PASS, "Record Exists with Price :: "+price+" Qyantity ::"+qty);
+		}else{
+			extentTest.log(LogStatus.FAIL, "Record DOESNT Exists with Price :: "+price+" Qyantity ::"+qty);
+		}
+	}
+
+	public double getSellOrerBookPrice(String price) {
+		if(sellPrice.size() != 0) 
+			return Double.parseDouble(sellPrice.get(sellPrice.size()-1).getText().trim()) - 0.1;
+		else
+			return Double.parseDouble(price);
+		
+	}
+
+	public double getBuyOrerBookPrice(String price) {
+		if(buyPrice.size() != 0) 
+			return Double.parseDouble(buyPrice.get(buyPrice.size()-1).getText().trim()) - 0.1;
+		else 
+			return Double.parseDouble(price);
 	}
 
 }
