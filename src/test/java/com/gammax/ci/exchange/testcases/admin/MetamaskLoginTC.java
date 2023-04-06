@@ -118,6 +118,6 @@ public class MetamaskLoginTC extends Base {
         metapage.switchToGammaX();
         extentTest.log(LogStatus.INFO, "Clicked on <b>Connect Wallet</b> button successfully");
         takeScreenShot();
-
+        driver.navigate().refresh();
     }
 }

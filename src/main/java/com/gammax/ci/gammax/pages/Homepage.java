@@ -15,6 +15,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -108,7 +109,7 @@ public class Homepage extends Base {
 	@FindBy(xpath = "//div[@class='options-name' and text()=' Mark Price ']/following-sibling::div")
 	WebElement markPrice;
 	
-	@FindBy(xpath = "//*[text()='Stop Limit']")
+	@FindBy(xpath = "//span[@class='selected-option-name' and contains(text(),'Stop Limit')]")
 	WebElement stopLimit;
 	
 	@FindBy(xpath = "//div[text()='Trigger']")
@@ -170,6 +171,15 @@ public class Homepage extends Base {
 
 	@FindBy(xpath ="//div[@class='asks']//div[@class='tbl-striped trade-rows ng-star-inserted']/div/div[2]")
 	List<WebElement> sellSize;
+	
+	@FindBy(xpath = "//mat-icon[@data-mat-icon-name='setting']")
+	WebElement settings;
+	
+	@FindBy(xpath = "//span[text()='Show Buy/Sell Confirmation Window']/following-sibling::mat-slide-toggle//input")
+	WebElement confWindow;
+	
+	@FindBy(xpath = "//mat-icon[@data-mat-icon-name='cancel']")
+	WebElement closex;
 
 	public void HomePageDriverRef(WebDriver driver) {
 		this.driver = driver;
@@ -313,6 +323,25 @@ public class Homepage extends Base {
 		}
 	}
 
+	@FindBy(xpath = "//div[@class='order-btn-control']/button[contains(text(),'Sell')]")
+	WebElement MarketSell_SellButton;
+
+	@FindBy(xpath = "//div[@class='order-btn-control']/button[contains(text(),'Buy')]")
+	WebElement MarketBuy_BuyButton;
+
+	public void clickMarketSell_SellButton(){
+		element.waitClickable(driver, MarketSell_SellButton, 10);
+		element.clickByJs(driver, MarketSell_SellButton);
+		extentTest.log(LogStatus.INFO, "Click on Market Sell > Sell Button");
+		takeScreenShot();
+	}
+	public void clickMarketBuy_BuyButton(){
+		element.waitClickable(driver, MarketBuy_BuyButton, 10);
+		element.clickByJs(driver, MarketBuy_BuyButton);
+		extentTest.log(LogStatus.INFO, "Click on Market Buy > Buy Button");
+		takeScreenShot();
+	}
+
 	public void clickBuy(){
 		element.waitClickable(driver, buy, 10);
 		element.clickByJs(driver, buy);
@@ -356,9 +385,11 @@ public class Homepage extends Base {
 		return markPrice.getText().trim();
 	}
 	
-	public void selectStopLimitTab(String tab) {
-		element.click(driver, stopLimit);
-		element.click(driver, tabs.stream().filter(e -> e.getText().equalsIgnoreCase(tab)).findFirst().get());
+	public void selectStopLimitTab(String tab) throws InterruptedException {
+		Thread.sleep(1000);
+		element.clickByJs(driver, stopLimit);
+		Thread.sleep(2000);
+		element.click(driver, tabs.stream().filter(e -> e.getText().contains(tab)).findFirst().get());
 		extentTest.log(LogStatus.PASS, "Click on "+tab);
 		takeScreenShot();
 	}
@@ -390,21 +421,24 @@ public class Homepage extends Base {
 	}
 	
 	public void selectCrypto(String cryptoEx) throws Exception {
+		Thread.sleep(2000);
 		element.click(driver, crypto);
 		extentTest.log(LogStatus.PASS, "Click On Crypto Dropdown");
 		takeScreenShot();
+		Thread.sleep(2000);
 		walletnames.stream().filter(e -> e.getText().trim().equalsIgnoreCase(cryptoEx))
 		.findFirst().get().click();
 		extentTest.log(LogStatus.PASS, "Select "+cryptoEx+" On Crypto Dropdown");
 		takeScreenShot();
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 	}
 	
 	public String getLimitPrice() {
 		return limitPrice.getText();
 	}
 	
-	public void clickOrderHistory() {
+	public void clickOrderHistory() throws InterruptedException {
+		Thread.sleep(2000);
 		element.click(driver, orderHistory);
 		extentTest.log(LogStatus.PASS, "Click On Order History");
 		takeScreenShot();
@@ -521,7 +555,8 @@ public class Homepage extends Base {
 		}
 	}
 
-	public double getSellOrerBookPrice(String price) {
+	public double getSellOrerBookPrice(String price) throws InterruptedException {
+		Thread.sleep(2000);
 		if(sellPrice.size() != 0) 
 			return Double.parseDouble(sellPrice.get(sellPrice.size()-1).getText().trim()) - 0.1;
 		else
@@ -534,6 +569,19 @@ public class Homepage extends Base {
 			return Double.parseDouble(buyPrice.get(buyPrice.size()-1).getText().trim()) - 0.1;
 		else 
 			return Double.parseDouble(price);
+	}
+	
+	public void enableConfWindow() {
+		element.click(driver, settings);
+		extentTest.log(LogStatus.PASS, "Click on Settings Icon");
+		takeScreenShot();
+		if(confWindow.getAttribute("aria-checked").equals("false")) {
+			element.click(driver, confWindow);
+			extentTest.log(LogStatus.PASS, "Click on Show Buy/Sell Confirmation Window Checkbox");
+			takeScreenShot();
+		}
+		element.click(driver, closex);
+		extentTest.log(LogStatus.PASS, "Click on X Icon");
 	}
 
 }

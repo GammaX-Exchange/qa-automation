@@ -24,8 +24,14 @@ public class ConfirmYourOrderPage extends Base{
 	JSWaiter jSWaiter = new JSWaiter();
 	static Logger logger = LogManager.getLogger(Homepage.class.getName());
 	
-    @FindBy(xpath = "//button[@class='btn btn-primary btn-block ng-star-inserted']")
-    private WebElement buysell;
+    @FindBy(xpath = "//button[@class='btn btn-primary btn-block' and contains(text(),'Sell')]")
+    private WebElement sell;
+
+	@FindBy(xpath = "//button[@class='btn btn-primary btn-block ng-star-inserted' and contains(text(),'Buy')]")
+	private WebElement buy;
+
+	@FindBy(xpath = "//button[@class='btn btn-primary btn-block' and contains(text(),'Buy')]")
+	private WebElement marketbuy;
     
     public void ConfirmYourOrderPageDriverRef(WebDriver driver) {
 		this.driver = driver;
@@ -35,15 +41,23 @@ public class ConfirmYourOrderPage extends Base{
 	}
 
     public void clickBuy(){
-    	element.waitClickable(driver, buysell, 10);
-    	element.clickByJs(driver, buysell);
+    	element.waitClickable(driver, buy, 10);
+    	element.clickByJs(driver, buy);
     	extentTest.log(LogStatus.INFO, "Click on BUY");
         takeScreenShot();
     }
 
-    public void clickSell() {
-    	element.waitClickable(driver, buysell, 10);
-    	element.clickByJs(driver, buysell);
+	public void clickMarketBuy(){
+		element.waitClickable(driver, marketbuy, 10);
+		element.clickByJs(driver, marketbuy);
+		extentTest.log(LogStatus.INFO, "Click on Market BUY");
+		takeScreenShot();
+	}
+
+    public void clickSell() throws InterruptedException {
+    	element.waitClickable(driver, sell, 10);
+		Thread.sleep(2000);
+    	element.click(driver, sell);
     	extentTest.log(LogStatus.INFO, "Click on SELL");
         takeScreenShot();
     }

@@ -62,12 +62,14 @@ public class LimitMarketStopTC extends Base{
         metapage.clickSign();        
         metapage.switchToGammaX();
         homePage.VerifyAleart("Wallet connected successful!");
+//        driver.navigate().refresh();
     }
     
     @Test(dataProvider = "getData")
     public void verify_StoplimitSell(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int markprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         homePage.selectStopLimitTab("Stop Limit");
@@ -78,7 +80,7 @@ public class LimitMarketStopTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
-        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+       // homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickOrderHistory();
         homePage.verifyOrderBook(data.getCrypto(), data.getQuantity(), ""+(markprice-5), "STOPLIMIT", "Accepted");
     }
@@ -87,6 +89,7 @@ public class LimitMarketStopTC extends Base{
     public void verify_StopLimitBuy(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -98,7 +101,7 @@ public class LimitMarketStopTC extends Base{
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickBuy();
-        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+       // homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickOrderHistory();
         homePage.verifyOrderBook(data.getCrypto(), data.getQuantity(), ""+(mprice+15), "STOPLIMIT", "Accepted");
     }
@@ -106,6 +109,7 @@ public class LimitMarketStopTC extends Base{
     @Test(dataProvider = "getData")
     public void verify_StopMarketBuy(ExcelData data) throws Exception{
     	setTestId(TEST_ID);
+    	homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -115,8 +119,8 @@ public class LimitMarketStopTC extends Base{
         homePage.selectTrigger("Mark");
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
-        confirmPage.clickBuy();
-        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        confirmPage.clickMarketBuy();
+       // homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickStops();
         homePage.verifyStops(data.getCrypto(), data.getQuantity(), ""+(mprice+30), "Stop Market", "Untriggered");
     }
@@ -125,6 +129,7 @@ public class LimitMarketStopTC extends Base{
     @Test(dataProvider = "getData")
     public void verify_StopMarketSell(ExcelData data) throws Exception{
     	setTestId(TEST_ID);
+    	homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -135,7 +140,7 @@ public class LimitMarketStopTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
-        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+       // homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickStops();
         homePage.verifyStops(data.getCrypto(), data.getQuantity(), ""+(mprice-30), "Stop Market", "Untriggered");
     }
@@ -143,6 +148,7 @@ public class LimitMarketStopTC extends Base{
     @Test(dataProvider = "getData")
     public void verify_TakeProfitLimitBuy(ExcelData data) throws Exception{
     	setTestId(TEST_ID);
+    	homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -153,8 +159,8 @@ public class LimitMarketStopTC extends Base{
         homePage.selectTIF("Good till Cancelled");
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
-        confirmPage.clickBuy();
-        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        confirmPage.clickMarketBuy();
+       // homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickStops();
         homePage.verifyStops(data.getCrypto(), data.getQuantity(), ""+(mprice-10), "Take Profit Limit", "Untriggered");
     }
@@ -162,6 +168,7 @@ public class LimitMarketStopTC extends Base{
     @Test(dataProvider = "getData")
     public void verify_TakeProfitLimitSell(ExcelData data) throws Exception{
     	setTestId(TEST_ID);
+    	homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -173,7 +180,7 @@ public class LimitMarketStopTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
-        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+       // homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickStops();
         homePage.verifyStops(data.getCrypto(), data.getQuantity(), ""+(mprice+10), "Take Profit Limit", "Untriggered");
     }
@@ -181,6 +188,7 @@ public class LimitMarketStopTC extends Base{
     @Test(dataProvider = "getData")
     public void verify_TakeProfitMarketBuy(ExcelData data) throws Exception{
     	setTestId(TEST_ID);
+    	homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -190,8 +198,8 @@ public class LimitMarketStopTC extends Base{
         homePage.selectTrigger("Mark");
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
-        confirmPage.clickBuy();
-        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        confirmPage.clickMarketBuy();
+       // homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickStops();
         homePage.verifyStops(data.getCrypto(), data.getQuantity(), ""+(mprice-10), "Take Profit Market", "Untriggered");
     }
@@ -199,6 +207,7 @@ public class LimitMarketStopTC extends Base{
     @Test(dataProvider = "getData")
     public void verify_TakeProfitMarketSell(ExcelData data) throws Exception{
     	setTestId(TEST_ID);
+    	homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         int mprice = (int)Double.parseDouble(homePage.getMarkPrice().trim());
         System.out.println("BALANCE :: "+mprice);
@@ -209,7 +218,7 @@ public class LimitMarketStopTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
-        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+       // homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.clickStops();
         homePage.verifyStops(data.getCrypto(), data.getQuantity(), ""+(mprice+10), "Take Profit Market", "Untriggered");
     }

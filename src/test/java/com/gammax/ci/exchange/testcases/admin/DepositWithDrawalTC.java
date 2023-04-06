@@ -63,6 +63,8 @@ public class DepositWithDrawalTC extends Base{
         metapage.clickSign();        
         metapage.switchToGammaX();
         homePage.VerifyAleart("Wallet connected successful!");
+        driver.navigate().refresh();
+        Thread.sleep(5000);
     }
     
     @Test(dataProvider = "getData")

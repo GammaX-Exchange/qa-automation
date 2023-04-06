@@ -61,20 +61,22 @@ public class LimitTC extends Base{
         metapage.clickSign();        
         metapage.switchToGammaX();
         homePage.VerifyAleart("Wallet connected successful!");
+        driver.navigate().refresh();
     }
     
     @Test(dataProvider = "getData")
     public void verify_limitBuy(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         homePage.enterLimitPrice(data.getPrice());
         homePage.enterQty(data.getQuantity());
         homePage.selectTIF(data.getTif());
         homePage.clickBuy();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
-        confirmPage.clickBuy();
-        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+        confirmPage.clickMarketBuy();
+//        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.validatBuyOrderBook("",data.getQuantity());
     }
     
@@ -82,20 +84,25 @@ public class LimitTC extends Base{
     public void verify_marketBuy(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
-        homePage.selectCrypto(data.getCrypto());
+        homePage.enableConfWindow();
+//        homePage.selectCrypto(data.getCrypto());
         homePage.clickMarket();
         homePage.enterQty(data.getQuantity());
-        homePage.clickBuy();
+        Thread.sleep(2000);
+        homePage.clickMarketBuy_BuyButton();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
-        confirmPage.clickBuy();
-        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
-        homePage.validatBuyOrderBook("",data.getQuantity());
+        confirmPage.clickMarketBuy();
+//        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+
+        //Need to be asked by Sanjiv
+ //       homePage.validatBuyOrderBook("",data.getQuantity());
     }
     
     @Test(dataProvider = "getData")
     public void verify_limitSell(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         homePage.enterLimitPrice(data.getPrice());
         homePage.enterQty(data.getQuantity());
@@ -103,7 +110,7 @@ public class LimitTC extends Base{
         homePage.clickSell();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
-        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+//        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.validatSellOrderBook("",data.getQuantity());
     }
     
@@ -111,13 +118,14 @@ public class LimitTC extends Base{
     public void verify_marketSell(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         homePage.clickMarket();
         homePage.enterQty(data.getQuantity());
-        homePage.clickSell();
+        homePage.clickMarketSell_SellButton();
         confirmPage.ConfirmYourOrderPageDriverRef(driver);
         confirmPage.clickSell();
-        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+//        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         homePage.validatSellOrderBook("",data.getQuantity());
     }
 

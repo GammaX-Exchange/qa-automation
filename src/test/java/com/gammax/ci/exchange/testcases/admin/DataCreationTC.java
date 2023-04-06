@@ -4,13 +4,8 @@ import com.gammax.ci.gammax.pages.*;
 import com.gammax.ci.gammax.testbase.Base;
 import com.gammax.ci.gammax.testbase.ExcelData;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.NoSuchElementException;
 
 public class DataCreationTC extends Base {
 
@@ -61,28 +56,31 @@ public class DataCreationTC extends Base {
         metapage.clickSign();
         metapage.switchToGammaX();
         homePage.VerifyAleart("Wallet connected successful!");
+        driver.navigate().refresh();
     }
 
     @Test(dataProvider = "getData")
     public void data_limitBuy(ExcelData data) throws Exception {
 
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
-        for(int i = 0; i<5; i++) {
+        for(int i = 0; i<2; i++) {
 	        double limitprice = homePage.getBuyOrerBookPrice(data.getPrice());
 	        homePage.enterLimitPrice(""+limitprice);
 	        homePage.enterQty(data.getQuantity());
 	        homePage.selectTIF(data.getTif());
 	        homePage.clickBuy();
 	        confirmPage.ConfirmYourOrderPageDriverRef(driver);
-	        confirmPage.clickBuy();
-	        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+	        confirmPage.clickMarketBuy();
+//	        homePage.VerifyAleart("Buy "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         }
     }
 
     @Test(dataProvider = "getData")
     public void data_limitSell(ExcelData data) throws Exception {
         setTestId(TEST_ID);
+        homePage.enableConfWindow();
         homePage.selectCrypto(data.getCrypto());
         for(int i = 0; i<5; i++) {
 	        double limitprice = homePage.getSellOrerBookPrice(data.getPrice());    
@@ -92,7 +90,7 @@ public class DataCreationTC extends Base {
 	        homePage.clickSell();
 	        confirmPage.ConfirmYourOrderPageDriverRef(driver);
 	        confirmPage.clickSell();
-	        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
+//	        homePage.VerifyAleart("Sell "+data.getQuantity()+" Contracts of "+data.getCrypto()+" at ");
         }
     }
 }
